@@ -1,7 +1,7 @@
 import re
 import os
 
-from argon2 import PasswordHasher
+from argon2 import PasswordHasher, exceptions
 from flask import (
     Flask,
     make_response,
@@ -38,42 +38,65 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/signup', methods = ['POST']) # type: ignore
+@app.route('/signup', methods = ['POST', 'GET']) # type: ignore
 def signup():
-    email = request.form.get("email-field")
-    password = request.form.get("password-field")
-    re_password = request.form.get("re-password-field")
+    if request.method == 'POST':
+        email = request.form.get("email-field")
+        password = request.form.get("password-field")
+        re_password = request.form.get("re-password-field")
 
-    # Checks
-    if password is None or re_password is None or email is None:
-        return make_response("Invalid Data", 400)
-    if password != re_password:
-        return make_response("Invalid Data", 400)
+        # Checks
+        if password is None or re_password is None or email is None:
+            return make_response("Invalid Data", 400)
+        if password != re_password:
+            return make_response("Invalid Data", 400)
+        if email_check.search(email) is None:
+            return make_response("Invalid Data", 400)
 
-    if email_check.search(email) is None:
-        return make_response("Invalid Data", 400)
+        if db["email"] is not None:
+            return redirect(url_for('signup'))
 
-    db[email] = {
-        "password-hash": hasher.hash(password)
-    }
-    session['email'] = email
-    return redirect(url_for('settings'))
+        db["email"] = {
+            "password-hash": hasher.hash(password)
+        }
+        session['email'] = email
+        return redirect(url_for('settings'))
+    else:
+        return render_template("signup.html")
 
 
 @app.route('/login', methods = ['POST']) # type: ignore
 def login():
-    email = request.form.get("email-field")
-    password = request.form.get("password-field")
+    if request.method == "POST":
+        email = request.form.get("email-field")
+        password = request.form.get("password-field")
 
-    # Checks
-    if password is None or email is None:
-        return make_response("Invalid Data", 400)
+        # Checks
+        if password is None or email is None:
+            return make_response("Invalid Data", 400)
+
+        # Check if password is valid
+        try:
+            hasher.verify(db[email]["password-hash"], password)
+        except exceptions.VerifyMismatchError:
+            return make_response("Unauthorized", 401)
+
+        # Check if we need to rehash
+        if hasher.check_needs_rehash(db[email]["password-hash"]):
+            db[email]["password-hash"] = hasher.hash(password)
+
+        return redirect(url_for("settings"))
 
 
-    if hasher.verify(db[email], password):
-        session['email'] = email
-        return redirect(url_for('settings'))
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    return redirect(url_for('login'))
 
+
+@app.route('/settings')
+def settings():
+    return "settings"
 
 
 app.run(host='0.0.0.0', port=8080, debug=True)
