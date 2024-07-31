@@ -1,5 +1,5 @@
 {
     "_comment": "this is just the formatting for my reference. no real data don't worry"
     "username": "hakkuun",
-    "password_hash": ""
+    "password_hash": "$argon2id$v=19$m=65536,t=3,p=4$IyyX5bq7BA2ZAtyJgGtzTA$4pFuBcOxlvzTFm62D/efh+V1Rq2yO6fo23o4kXE7HCY"
 }
