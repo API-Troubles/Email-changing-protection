@@ -1,4 +1,4 @@
-function handleSignup(event) {
+function handleLogin(event) {
     event.preventDefault();
     const errorBox = document.getElementById("error-msg");
 
