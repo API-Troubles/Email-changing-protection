@@ -41,26 +41,24 @@ def index():
 @app.route('/signup', methods = ['POST', 'GET']) # type: ignore
 def signup():
     if request.method == 'POST':
-        email = request.form.get("email-field")
-        password = request.form.get("password-field")
-        re_password = request.form.get("re-password-field")
+        email = request.get_json().get("email")
+        password = request.get_json().get("password")
 
         # Checks
-        if password is None or re_password is None or email is None:
-            return make_response("Invalid Data", 400)
-        if password != re_password:
-            return make_response("Invalid Data", 400)
-        if email_check.search(email) is None:
-            return make_response("Invalid Data", 400)
+        if password is None or email is None: # Ensure pw/email exist
+            return make_response({"status": "Invalid Password"}, 400)
+        if email_check.search(email) is None: # Ensure email matches regex
+            return make_response({"status": "Invalid Email"}, 400)
 
-        if db.get(email) is not None:
-            return "email taken"
+        print(db.get(email))
+        if db.get(email) is not None: # Ensure email is not taken
+            return make_response({"status": "Email taken"}, 409)
 
-        db["email"] = {
+        db[email] = { # Set email in db
             "password-hash": hasher.hash(password)
         }
-        session['email'] = email
-        return redirect(url_for('settings'))
+        session['email'] = email # Assign a session
+        return make_response({"status": "OK"}, 201) # Return OK
     else: # Render signup page on GET req
         return render_template("signup.html")
 
