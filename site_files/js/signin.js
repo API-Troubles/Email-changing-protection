@@ -6,17 +6,10 @@ function handleLogin(event) {
 
     const email = document.getElementById('email-field').value;
     const password = document.getElementById('password-field').value;
-    const rePassword = document.getElementById('re-password-field').value;
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/signup', true);
+    xhr.open('POST', '/login', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-
-    if (password !== rePassword) {
-        const error = document.createTextNode(`The password fields do not match.`);
-        errorBox.appendChild(error);
-        return
-    }
 
     if (!emailRe.test(email)) {
         const error = document.createTextNode(`That is not a valid email.`);
