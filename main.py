@@ -50,7 +50,6 @@ def signup():
         if email_check.search(email) is None: # Ensure email matches regex
             return make_response({"status": "Invalid Email"}, 400)
 
-        print(db.get(email))
         if db.get(email) is not None: # Ensure email is not taken
             return make_response({"status": "Email taken"}, 409)
 
@@ -60,6 +59,8 @@ def signup():
         session['email'] = email # Assign a session
         return make_response({"status": "OK"}, 201) # Return OK
     else: # Render signup page on GET req
+        if session.get('email'):
+            return render_template("settings.html")
         return render_template("signup.html")
 
 
@@ -88,6 +89,8 @@ def login():
 
         return redirect(url_for("settings"))
     else: # Render login page on GET req
+        if session.get('email'):
+            return render_template("settings.html")
         return render_template("login.html")
 
 
