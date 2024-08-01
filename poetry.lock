@@ -137,6 +137,16 @@ files = [
 frozenlist = ">=1.1.0"
 
 [[package]]
+name = "argon2"
+version = "0.1.10"
+description = "Bindings for the argon2 password hasher"
+optional = false
+python-versions = "*"
+files = [
+    {file = "argon2-0.1.10.tar.gz", hash = "sha256:523a3d3b88f3a46244b4976a6ca81994705848538bbe9e41426ea54ccb75eb90"},
+]
+
+[[package]]
 name = "argon2-cffi"
 version = "23.1.0"
 description = "Argon2 for Python"
@@ -1099,4 +1109,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10.0,<3.12"
-content-hash = "f5c4e8c098df03f83edaf7ac3e0e848c7fb0fc4715b108e49a1204cae987eb02"
+content-hash = "25e2751f80aea8b04c462aca4b8524718830bf18cdce2df672d8bb75c2cb8ec7"
