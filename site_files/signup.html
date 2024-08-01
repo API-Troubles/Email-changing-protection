@@ -10,15 +10,21 @@
         <p>Why do I need to sign up?</p>
         <p>For this demo you will need to make an account to simulate a normal account including an email. I really promise nothing will happen to it. I recommend using 2 tempoary emails for this demo, just in case :), due to the fact that it needs to remain plaintext, so well, this demo can actually send you an email.</p>
 
-        <form onsubmit="handleLogin(event)">
+        <div>
+            <p id="error-msg"></p>
+        </div>
+
+        <form onsubmit="handleSignup(event)">
             <label for="email-field">Email:</label><br>
-            <input type="email" placeholder="Email" id="email-field" name="email-field"><br><br>
+            <input type="email" placeholder="text" id="email-field" name="email-field"><br><br>
 
             <label for="password-field">Password:</label><br>
             <input type="password" placeholder="password" id="password-field" name="password-field"><br><br>
 
             <label for="re-password-field">Retype Password:</label><br>
-            <input type="password" placeholder="Retype password" id="re-password-field" name="re-password-field"><br><br>
+            <input type="password" placeholder="Retype Password" id="re-password-field" name="re-password-field"><br><br>
+
+            <input type="checkbox" onclick="showPassword()" id="show-pw">Show Password</button><br>
 
             <input type="submit" value="Submit">
         </form>
