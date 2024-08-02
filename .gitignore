@@ -162,3 +162,5 @@ cython_debug/
 # Replit files
 .replit
 .env
+poetry.lock
+pyproject.toml
