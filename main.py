@@ -1,5 +1,8 @@
+from dataclasses import is_dataclass
 import os
 import re
+
+import uuid
 
 from argon2 import PasswordHasher, exceptions
 from flask import (
@@ -24,9 +27,15 @@ app.secret_key = os.environ['SECRET']
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
+class User(flask_login.UserMixin):
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
 @login_manager.user_loader
-def load_user(user_id):
-    return db.get(user_id)
+def load_user(email):
+    return db.get(email)
 
 
 
@@ -64,10 +73,10 @@ def signup():
         if db.get(email) is not None: # Ensure email is not taken
             return make_response({"status": "Email taken"}, 409)
 
-        db[email] = { # Set email in db
-            "password-hash": hasher.hash(password)
-        }
-        flask_login.login_user(email) # Login a user
+        # Create a user object with a unique UUID
+        db[email] = User(email, hasher.hash(password))
+
+        flask_login.login_user(User(email, hasher.hash(password)))
         return make_response({"status": "OK"}, 201) # Return OK
     else: # Render signup page on GET req
         if session.get('email'):
@@ -81,6 +90,8 @@ def login():
         email = request.form.get("email-field")
         password = request.form.get("password-field")
         remember = request.form.get("remember-me")
+
+        user = db.get(email)
 
         # Checks
         if password is None or email is None:
