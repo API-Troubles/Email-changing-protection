@@ -18,9 +18,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-# Test user db cause idk why nothing works rn
-users = {}
-
 class User(flask_login.UserMixin):
     def __init__(self, email: str, password: str):
         self.email = email
@@ -28,6 +25,9 @@ class User(flask_login.UserMixin):
 
     def get_id(self):
         return str(self.email)
+
+# Test user db cause idk why nothing works rn
+users = {}
 
 
 @login_manager.user_loader
@@ -97,13 +97,13 @@ def login():
 
         # Check if password is valid
         try:
-            hasher.verify(users[email]["password-hash"], password)
+            hasher.verify(users[email].password, password)
         except exceptions.VerifyMismatchError:
             return flask.make_response({"status": "Incorrect username/password"}, 401)
 
         # Check if we need to rehash
-        if hasher.check_needs_rehash(users[email]["password-hash"]):
-            users[email]["password-hash"] = hasher.hash(password)
+        if hasher.check_needs_rehash(users[email].password):
+            users[email] = User(email, hasher.hash(password))
 
         print(users.get(email))
 
@@ -125,9 +125,8 @@ def logout():
 @app.route('/settings')
 @flask_login.login_required
 def settings():
-    print(flask_login.current_user)
     return flask.render_template_string(
-        "logged in as: {{ user.id }}", 
+        "logged in as: {{ user.email }}", 
         user=flask_login.current_user
     )
 
