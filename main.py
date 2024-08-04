@@ -18,27 +18,21 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-class Test:
-    def __init__(self):
-        print("YOOOOOOOOO!")
+# Test user db cause idk why nothing works rn
+users = {}
 
 class User(flask_login.UserMixin):
-    def __init__(self, email, password):
+    def __init__(self, email: str, password: str):
         self.email = email
         self.password = password
 
     def get_id(self):
-        return self.email
+        return str(self.email)
+
 
 @login_manager.user_loader
 def load_user(email):
-    user_data = db.get(email)
-    if user_data:
-        print("get user")
-        return User(email, user_data['password-hash'])
-    else:
-        return None
-
+    return users.get(email)
 
 
 email_check = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
@@ -72,14 +66,14 @@ def signup():
         if email_check.search(email) is None: # Ensure email matches regex
             return flask.make_response({"status": "Invalid Email"}, 400)
 
-        if db.get(email) is not None: # Ensure email is not taken
+        if users.get(email) is not None: # Ensure email is not taken
             return flask.make_response({"status": "Email taken"}, 409)
 
         # Create a user object
-        db[email] = {"password-hash": hasher.hash(password)}
+        users[email] = User(email, hasher.hash(password))
 
         # Log in the new user!
-        flask_login.login_user(load_user(email))
+        flask_login.login_user(users[email])
         return flask.make_response({"status": "OK"}, 201) # Return OK
     else: # Render signup page on GET req
         if session.get('email'):
@@ -98,22 +92,22 @@ def login():
         if password is None or email is None:
             return flask.make_response({"status": "Missing data"}, 400)
 
-        if db.get(email) is None:
+        if users.get(email) is None:
             return flask.make_response({"status": "Incorrect username/password"}, 401)
 
         # Check if password is valid
         try:
-            hasher.verify(db[email]["password-hash"], password)
+            hasher.verify(users[email]["password-hash"], password)
         except exceptions.VerifyMismatchError:
             return flask.make_response({"status": "Incorrect username/password"}, 401)
 
         # Check if we need to rehash
-        if hasher.check_needs_rehash(db[email]["password-hash"]):
-            db[email]["password-hash"] = hasher.hash(password)
+        if hasher.check_needs_rehash(users[email]["password-hash"]):
+            users[email]["password-hash"] = hasher.hash(password)
 
-        print(db.get(email))
+        print(users.get(email))
 
-        flask_login.login_user(db.get(email)) # Login a user
+        flask_login.login_user(users.get(email)) # Login a user
         return flask.make_response({"status": "OK"}, 200)
     else: # Render login page on GET req
         if session.get('email'):
@@ -131,6 +125,7 @@ def logout():
 @app.route('/settings')
 @flask_login.login_required
 def settings():
+    print(flask_login.current_user)
     return flask.render_template_string(
         "logged in as: {{ user.id }}", 
         user=flask_login.current_user
@@ -142,7 +137,7 @@ def about():
     return flask.render_template("about.html")
 
 
-for i in db:
+for i in users:
     print(f"Email: {i}")
 
 
