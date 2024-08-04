@@ -1,6 +1,8 @@
-li {
-  list-style-type: none;
-  margin: 0;
+.nav-item {
+  margin-left: 1em;
   padding: 0;
-  display: inline;
+}
+
+.nav-right-align {
+  float: right;
 }
