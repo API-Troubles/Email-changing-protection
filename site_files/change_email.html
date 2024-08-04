@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %}Change Email{% endblock %}</h1>
+
+    <p>Important: To change your email we're going to ask you a few questions to prevent scams and fraud. Please answer these questions yourself. No one, not your bank, not anyone over the phone.</p>
+
+    <form>
+        <p>Do you own the email your changing to?</p>
+        <input type="radio" id="response-own-email-yes" name="response-own-email" value="Yes">
+        <label for="response-own-email-yes">Yes</label>
+        <input type="radio" id="response-own-email-no" name="response-own-email" value="No">
+        <label for="response-own-email-no">No</label><br>
+        
+    </form>
+{% endblock %}
