@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Account Demo: Logout</title>
-    </head>
-    <body>
-        <h1>Logged out</h1>
+{% extends 'base.html' %}
 
-        <p><a href="{{ url_for('index') }}">Click here</a> to return to the homepage</p>
-    </body>
-</html>
+{% block content %}
+    <h1>{% block title %}Logout{% endblock %}</h1>
+
+    <p><a href="{{ url_for('index') }}">Click here</a> to return to the homepage</p>
+{% endblock %}

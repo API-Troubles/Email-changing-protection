@@ -1,32 +1,31 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Account Demo: Signup</title>
-        <script src=" {{ url_for('static', filename='js/signup.js') }} "></script>
-    </head>
-    <body>
-        <h1>Sign up</h1>
+{% extends 'base.html' %}
 
-        <p>Why do I need to sign up?</p>
-        <p>For this demo you will need to make an account to simulate a normal account including an email. I really promise nothing will happen to it. I recommend using 2 tempoary emails for this demo, just in case :), due to the fact that it needs to remain plaintext, so well, this demo can actually send you an email.</p>
+{% block head %}
+<script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+{% endblock %}
 
-        <div>
-            <p id="error-msg"></p>
-        </div>
+{% block content %}
+    <h1>{% block title %}Sign up{% endblock %}</h1>
 
-        <form onsubmit="handleSignup(event)">
-            <label for="email-field">Email:</label><br>
-            <input type="email" placeholder="text" id="email-field" name="email-field"><br><br>
+    <p>Why do I need to sign up?</p>
+    <p>For this demo you will need to make an account to simulate a normal account including an email. I really promise nothing will happen to it. I recommend using 2 tempoary emails for this demo, just in case :), due to the fact that it needs to remain plaintext, so well, this demo can actually send you an email.</p>
 
-            <label for="password-field">Password:</label><br>
-            <input type="password" placeholder="password" id="password-field" name="password-field"><br><br>
+    <div>
+        <p id="error-msg"></p>
+    </div>
 
-            <label for="re-password-field">Retype Password:</label><br>
-            <input type="password" placeholder="Retype Password" id="re-password-field" name="re-password-field"><br><br>
+    <form onsubmit="handleSignup(event)">
+        <label for="email-field">Email:</label><br>
+        <input type="email" placeholder="text" id="email-field" name="email-field"><br><br>
 
-            <input type="checkbox" onclick="showPassword()" id="show-pw">Show Password</button><br>
+        <label for="password-field">Password:</label><br>
+        <input type="password" placeholder="password" id="password-field" name="password-field"><br><br>
 
-            <input type="submit" value="Submit">
-        </form>
-    </body>
-</html>
+        <label for="re-password-field">Retype Password:</label><br>
+        <input type="password" placeholder="Retype Password" id="re-password-field" name="re-password-field"><br><br>
+
+        <input type="checkbox" onclick="showPassword()" id="show-pw">Show Password</button><br>
+
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

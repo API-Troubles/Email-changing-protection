@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Account Demo</title>
-        <link rel="stylesheet" href="/static/css/menu.css">
-    </head>
-    <body>
-        <menu>
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('about') }}">Whats this?</a></li>
-          <li><a href="{{ url_for('login') }}">Login</a></li>
-          <li><a href="{{ url_for('signup') }}">Signup</a></li>
-        </menu>
-        <h1>Welcome to the demo!</h1>
+{% extends 'base.html' %}
 
-        <p>idk wat to put here</p>
-    </body>
-</html>
+{% block content %}
+    <h1>Welcome to the {% block title %}Demo{% endblock %}!</h1>
+    
+    <p>Idk wat to put here but welcome!</p>
+{% endblock %}

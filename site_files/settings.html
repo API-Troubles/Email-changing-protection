@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Account Demo: Settings</title>
-    </head>
-    <body>
-        <h1>Settings</h1>
+{% extends 'base.html' %}
 
-        <h2>Change email</h2>
-        <input type="text">
-        <button>Change Email</button>
+{% block content %}
+    <h1>{% block title %}Settings{% endblock %}</h1>
 
-        <h2>Danger Corner (Ig)</h2>
+    <p>Logged in as {{ user.email }}.</p>
 
-        <button>Delete your account</button>
-        <p>WIP</p>
-    </body>
-</html>
+    <h2>Change email</h2>
+    <input type="text">
+    <button>Change Email</button>
+
+    <h2>Danger Corner (Ig)</h2>
+
+    <button>Delete your account</button>
+    <p>WIP</p>
+{% endblock %}

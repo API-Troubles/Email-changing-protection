@@ -1,0 +1,23 @@
+{# Base template for the rest of the webpages #}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Demo: {% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/index.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/menu.css') }} ">
+    {% block head %} {% endblock %}
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}" class="nav-item">Home</a> 
+        <a href="{{ url_for('about') }}" class="nav-item">About this Demo</a> 
+        <a href="{{ url_for('login') }}" class="nav-item nav-right-align">Login</a> 
+        <a href="{{ url_for('signup') }}" class="nav-item nav-right-align">Signup</a> 
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Account Demo: About this</title>
-    </head>
-    <body>
-        <menu>
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('about') }}">Whats this?</a></li>
-          <li><a href="{{ url_for('login') }}">Login</a></li>
-          <li><a href="{{ url_for('signup') }}">Signup</a></li>
-        </menu>
-        <h1>Hi!</h1>
+{% extends 'base.html' %}
 
-        <p>A few days ago, a friend of mine had their account hacked on Discord. The attacker socially engineered them into changing their recovery email. They recovered their account since, but I wondered, how could companies prevent this? And well, this is the demo of that very idea!</p>
+{% block content %}
+    <h1>Hi!</h1>
+
+    <p>A few days ago, a friend of mine had their account hacked on Discord. The attacker socially engineered them into changing their recovery email. They recovered their account since, but I wondered, how could companies prevent this? And well, this is the demo of that very idea!</p>
     </body>
 </html>
+{% endblock %}
