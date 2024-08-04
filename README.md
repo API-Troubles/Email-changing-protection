@@ -18,7 +18,7 @@ Please Read: Answer these questions by yourself. Don't let anyone else tell you 
 - [x] Is this your decision to change this email, and NOT anyone else not family?
 
 ### Identification of common scams
-- [ ] Did tech support from another company tell you to change your email?
+- [ ] Did tech support tell you to change your email?
 - [ ] Did we tell you to change your email?
 - [ ] Is changing your email something someones told you needs to be done quickly?
 - [ ] Is someone telling you to change your email that is NOT family?
