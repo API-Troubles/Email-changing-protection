@@ -125,8 +125,7 @@ def logout():
 @app.route('/settings')
 @flask_login.fresh_login_required
 def settings():
-    return flask.render_template_string(
-        "logged in as: {{ user.email }}", 
+    return flask.render_template("settings.html", 
         user=flask_login.current_user
     )
 
