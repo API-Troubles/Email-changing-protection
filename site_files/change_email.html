@@ -3,14 +3,26 @@
 {% block content %}
     <h1>{% block title %}Change Email{% endblock %}</h1>
 
-    <p>Important: To change your email we're going to ask you a few questions to prevent scams and fraud. Please answer these questions yourself. No one, not your bank, not anyone over the phone.</p>
+    <p>Please Read: Answer these questions by yourself. Don't let anyone else tell you how to answer. If you are unsure or feel pressured, feel free to contact our support team.</p>
 
     <form>
-        <p>Do you own the email your changing to?</p>
-        <input type="radio" id="response-own-email-yes" name="response-own-email" value="Yes">
-        <label for="response-own-email-yes">Yes</label>
-        <input type="radio" id="response-own-email-no" name="response-own-email" value="No">
-        <label for="response-own-email-no">No</label><br>
+        <p>Do you own/your family the email your changing to?</p>
+        <input type="radio" id="own-email-yes" name="own-email" value="Yes">
+        <label for="own-email-yes">Yes</label>
+        <input type="radio" id="own-email-no" name="own-email" value="No">
+        <label for="own-email-no">No</label><br>
+
+        <p>Is this your decision to change this email, and NOT anyone else not family?</p>
+        <input type="radio" id="decision-own-yes" name="decision-own" value="Yes">
+        <label for="decision-own-yes">Yes</label>
+        <input type="radio" id="decision-own-no" name="decision-own" value="No">
+        <label for="decision-own-no">No</label><br>
+
+        <p>Did tech support tell you to change your email?</p>
+        <input type="radio" id="tech-support-yes" name="tech-support" value="Yes">
+        <label for="tech-support-yes">Yes</label>
+        <input type="radio" id="tech-support-no" name="tech-support" value="No">
+        <label for="tech-support-no">No</label><br>
         
     </form>
 {% endblock %}
