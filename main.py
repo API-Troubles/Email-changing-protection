@@ -8,7 +8,6 @@ from flask import Flask, request, session
 from flask_login import LoginManager
 from replit import db
 
-
 app = Flask(__name__, template_folder="site_files/")
 hasher = PasswordHasher()
 
@@ -31,6 +30,11 @@ class User(flask_login.UserMixin):
 def load_user(email):
     info = db.get(email)
     return User(info["email"], info["password-hash"]) if info else None
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return flask.redirect(flask.url_for("login"))
 
 
 email_check = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
@@ -84,7 +88,7 @@ def login():
     if request.method == "POST":
         email = request.form.get("email-field")
         password = request.form.get("password-field")
-        remember = request.form.get("remember-me")
+        remember = request.form.get("remember-box") == "on" # Convert to bool
 
         # Checks
         if password is None or email is None:
@@ -103,7 +107,7 @@ def login():
         if hasher.check_needs_rehash(db[email]["password-hash"]):
             db[email] = {"email": email, "password-hash": hasher.hash(password)}
 
-        flask_login.login_user(User(db[email]["email"], db[email]["password-hash"]))
+        flask_login.login_user(User(db[email]["email"], db[email]["password-hash"]), remember=remember)
         return flask.make_response({"status": "OK"}, 200)
     else: # Render login page on GET req
         if session.get('email'):
@@ -119,7 +123,7 @@ def logout():
 
 
 @app.route('/settings')
-@flask_login.login_required
+@flask_login.fresh_login_required
 def settings():
     return flask.render_template_string(
         "logged in as: {{ user.email }}", 
@@ -130,7 +134,6 @@ def settings():
 @app.route('/about')
 def about():
     return flask.render_template("about.html")
-
 
 for i in db:
     print(f"Email: {i}")
