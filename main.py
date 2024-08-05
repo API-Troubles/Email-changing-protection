@@ -129,6 +129,11 @@ def settings():
         user=flask_login.current_user
     )
 
+@app.route('/change_email')
+@flask_login.fresh_login_required
+def change_email():
+    return flask.render_template("change_email.html")
+
 
 @app.route('/about')
 def about():
