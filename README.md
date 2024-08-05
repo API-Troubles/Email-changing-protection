@@ -20,7 +20,7 @@ Please Read: Answer these questions by yourself. Don't let anyone else tell you 
 ### Identification of common scams
 - [ ] Did tech support tell you to change your email?
 - [ ] Did we tell you to change your email?
-- [ ] Is changing your email something someones told you needs to be done quickly?
+- [ ] Did someone tell you that this an urgent matter?
 - [ ] Is someone telling you to change your email that is NOT family?
 - [ ] Did someone not family tell you to change your email by phone, text or email?
 
