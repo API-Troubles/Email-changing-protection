@@ -90,6 +90,8 @@ def login():
         password = request.form.get("password-field")
         remember = request.form.get("remember-box") == "on" # Convert to bool
 
+        flask.flash('testing 1 2 3')
+
         # Checks
         if password is None or email is None:
             return flask.make_response({"status": "Missing data"}, 400)
