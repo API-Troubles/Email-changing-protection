@@ -3,26 +3,68 @@
 {% block content %}
     <h1>{% block title %}Change Email{% endblock %}</h1>
 
-    <p>Please Read: Answer these questions by yourself. Don't let anyone else tell you how to answer. If you are unsure or feel pressured, feel free to contact our support team.</p>
+    <h2>Scam Prevention Warning</h2>
+
+    <p>Please Read: Answer these questions by yourself. Don't let anyone else tell you how to answer. There are horrible people who want to take over your accounts to take money or other things from you. If you are unsure or feel pressured by someone, feel free to contact our support team.</p>
+
+    <p>Be Careful! Make sure if your being told by family or friends, that this is actually them! People online can take over their accounts and pretend to be them.</p>
+
+    <h2>Change Your Email</h2>
 
     <form>
-        <p>Do you own/your family the email your changing to?</p>
-        <input type="radio" id="own-email-yes" name="own-email" value="Yes">
-        <label for="own-email-yes">Yes</label>
-        <input type="radio" id="own-email-no" name="own-email" value="No">
-        <label for="own-email-no">No</label><br>
+        <div>
+            <p>Do you/your family own the email your changing to?</p>
+            <input type="radio" id="own-email-yes" name="own-email" value="yes">
+            <label for="own-email-yes">Yes</label>
+            <input type="radio" id="own-email-no" name="own-email" value="no">
+            <label for="own-email-no">No</label><br>
+        </div>
 
-        <p>Is this your decision to change this email, and NOT anyone else not family?</p>
-        <input type="radio" id="decision-own-yes" name="decision-own" value="Yes">
-        <label for="decision-own-yes">Yes</label>
-        <input type="radio" id="decision-own-no" name="decision-own" value="No">
-        <label for="decision-own-no">No</label><br>
+        <div>
+            <p>Is this your decision to change this email, and NOT anyone else? This includes trusted family and friends.</p>
+            <input type="radio" id="decision-own-yes" name="decision-own" value="yes">
+            <label for="decision-own-yes">Yes</label>
+            <input type="radio" id="decision-own-no" name="decision-own" value="no">
+            <label for="decision-own-no">No</label><br>
+        </div>
 
-        <p>Did tech support tell you to change your email?</p>
-        <input type="radio" id="tech-support-yes" name="tech-support" value="Yes">
-        <label for="tech-support-yes">Yes</label>
-        <input type="radio" id="tech-support-no" name="tech-support" value="No">
-        <label for="tech-support-no">No</label><br>
-        
+        <div>
+            <p>Why are you changing your email address?</p>
+            <input type="radio" id="official-email" name="why-change-email" value="official-email">
+            <label for="official-email">Official email</label><br>
+            
+            <input type="radio" id="trusted-family" name="why-change-email" value="trusted-family">
+            <label for="trusted-family">I was told by a trusted family member / friend</label><br>
+            
+            <input type="radio" id="random-person" name="why-change-email" value="random-person">
+            <label for="random-person">I was told by someone NOT trusted family / friend</label><br>
+            
+            <input type="radio" id="tech-support" name="why-change-email" value="tech-support">
+            <label for="tech-support">Tech support told me to</label><br>
+            
+            <input type="radio" id="we-told" name="why-change-email" value="we-told">
+            <label for="we-told">I was told to by you</label><br>
+
+            <input type="radio" id="own-choice" name="why-change-email" value="own-choice">
+            <label for="own-choice">I decided to myself</label><br>
+        </div>
+
+        <div>
+            <p>Do you understand what scams are and how they work?</p>
+            <input type="radio" id="understand-scams-yes" name="understand-scams" value="yes">
+            <label for="understand-scams-yes">Yes, I know what scams are</label>
+            <input type="radio" id="understand-scams-no" name="understand-scams" value="no">
+            <label for="understand-scams-no">No, I don't</label><br>
+        </div>
+
+        <div>
+            <p>Did someone say this is an urgent matter?</p>
+            <input type="radio" id="urgent-matter-yes" name="urgent-matter" value="yes">
+            <label for="urgent-matter-yes">Yes, this is urgent</label>
+            <input type="radio" id="urgent-matter-no" name="urgent-matter" value="no">
+            <label for="urgent-matter-no">No, this isn't</label><br>
+        </div>
+
+        <input type="submit">
     </form>
 {% endblock %}
