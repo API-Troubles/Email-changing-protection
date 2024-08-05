@@ -6,11 +6,16 @@
     <p>Logged in as {{ user.email }}.</p>
 
     <h2>Change email</h2>
-    <input type="text">
-    <button>Change Email</button>
+    <form action="{{ url_for('change_email') }}" method="POST">
+        <input type="text" id="email-field" name="email-field" placeholder="Email">
+        <input type="submit" value="Change Email">
+    </form>
 
-    <h2>Danger Corner (Ig)</h2>
+    <h2>Danger Corner</h2>
 
-    <button>Delete your account</button>
+    <div>
+        <p>The following will literally just delete your entire existance off the replit database lol.</p>
+        <button onclick="">Delete My Account</button>
+    </div>
     <p>WIP</p>
 {% endblock %}
