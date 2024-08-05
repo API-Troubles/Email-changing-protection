@@ -129,10 +129,22 @@ def settings():
         user=flask_login.current_user
     )
 
-@app.route('/change_email')
+@app.route('/change_email', methods=["POST"])
 @flask_login.fresh_login_required
 def change_email():
-    return flask.render_template("change_email.html")
+    email = request.form.get('email-field')
+    if not email:
+        return flask.make_response({"status": "No email"}, 400)
+    if email_check.search(email) is None:
+        return flask.make_response({"status": "Invalid email syntax"}, 400)
+    return flask.render_template("change_email.html", email=email)
+
+
+@app.route('/delete_account')
+@flask_login.fresh_login_required
+def delete_account():
+    del db[flask_login.current_user.email]
+    return flask.make_response("Account Deleted, bye!", 200)
 
 
 @app.route('/about')
