@@ -5,7 +5,7 @@ import flask
 import flask_login
 from argon2 import PasswordHasher, exceptions
 from flask import Flask, request, session
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from replit import db
 
 
@@ -35,6 +35,7 @@ def load_user(email):
 
 @login_manager.unauthorized_handler
 def unauthorized():
+    print("unauthorized call")
     return flask.redirect(flask.url_for("login"))
 
 

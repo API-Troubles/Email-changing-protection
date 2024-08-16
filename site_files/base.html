@@ -18,8 +18,11 @@
     <nav>
         <a href="{{ url_for('index') }}" class="nav-item">Home</a> 
         <a href="{{ url_for('about') }}" class="nav-item">About this Demo</a> 
+
+        {% block end_btns %}
         <a href="{{ url_for('login') }}" class="nav-item nav-right-align">Login</a> 
         <a href="{{ url_for('signup') }}" class="nav-item nav-right-align">Signup</a> 
+        {% endblock %}
     </nav>
     <hr>
     <div class="content">

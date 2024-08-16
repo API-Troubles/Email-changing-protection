@@ -29,3 +29,27 @@ function handleChange(event) {
 
     xhr.send(JSON.stringify({ email: email }));
 }
+
+function warnScams() {
+    let prompt = document.getElementById('warning-scams');
+    if (prompt.style.display === "block") {
+        prompt.style.display = "none";
+    } else if (prompt.style.display === "none") {
+            prompt.style.display = "block";
+    }
+}
+
+function warnRushing() {
+    let prompt = document.getElementById('warning-rush');
+    if (prompt.style.display === "block") {
+        prompt.style.display = "none";
+    } else if (prompt.style.display === "none") {
+            prompt.style.display = "block";
+    }
+}
+
+document.getElementById('warning-rush').addEventListener("type", warnRushing)
+document.getElementById('warning-rush').addEventListener("type", warnRushing)
+
+document.getElementById('warning-rush').addEventListener("type", warnRushing)
+document.getElementById('warning-rush').addEventListener("type", warnRushing)
