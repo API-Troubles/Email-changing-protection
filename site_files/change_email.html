@@ -13,7 +13,7 @@
 
     <h2>Change Your Email</h2>
 
-    <form>
+    <form action="{{ url_for('api/change_email') }}" method="post">
         <div>
             <p>Do you/your family own <b>{{ email }}</b>?</p>
             <input type="radio" id="own-email-yes" name="own-email" value="yes">

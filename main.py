@@ -8,6 +8,7 @@ from flask import Flask, request, session
 from flask_login import LoginManager
 from replit import db
 
+
 app = Flask(__name__, template_folder="site_files/")
 hasher = PasswordHasher()
 
@@ -90,8 +91,6 @@ def login():
         password = request.form.get("password-field")
         remember = request.form.get("remember-box") == "on" # Convert to bool
 
-        flask.flash('testing 1 2 3')
-
         # Checks
         if password is None or email is None:
             return flask.make_response({"status": "Missing data"}, 400)
@@ -134,12 +133,26 @@ def settings():
 @app.route('/change_email', methods=["POST"])
 @flask_login.fresh_login_required
 def change_email():
-    email = request.form.get('email-field')
+    email = request.form.get('email')
     if not email:
         return flask.make_response({"status": "No email"}, 400)
     if email_check.search(email) is None:
         return flask.make_response({"status": "Invalid email syntax"}, 400)
+        
     return flask.render_template("change_email.html", email=email)
+
+@app.route('/api/change_email', methods=["GET"])
+@flask_login.fresh_login_required
+def change_email_api():
+    email = request.form.get('email-field')
+    #if not email:
+    #    return flask.make_response({"status": "No email"}, 400)
+    #if email_check.search(email) is None:
+    #    return flask.make_response({"status": "Invalid email syntax"}, 400)
+
+    print(flask_login.current_user.email)
+
+    return flask.render_template("logout.html") # Logout user afterwards
 
 
 @app.route('/delete_account')
