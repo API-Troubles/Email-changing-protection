@@ -80,7 +80,7 @@ def signup():
         flask_login.login_user(User(db[email]["email"], db[email]["password-hash"]))
         return flask.make_response({"status": "OK"}, 201) # Return OK
     else: # Render signup page on GET req
-        if session.get('email'):
+        if not current_user.is_authenticated:
             return flask.render_template("settings.html")
         return flask.render_template("signup.html")
 
@@ -88,9 +88,9 @@ def signup():
 @app.route('/login', methods = ['POST', 'GET']) # type: ignore
 def login():
     if request.method == "POST":
-        email = request.form.get("email-field")
-        password = request.form.get("password-field")
-        remember = request.form.get("remember-box") == "on" # Convert to bool
+        email = request.get_json().get("email")
+        password = request.get_json().get("password")
+        remember = request.get_json().get("remember-box") == "on" # Convert to bool
 
         # Checks
         if password is None or email is None:
@@ -112,9 +112,48 @@ def login():
         flask_login.login_user(User(db[email]["email"], db[email]["password-hash"]), remember=remember)
         return flask.make_response({"status": "OK"}, 200)
     else: # Render login page on GET req
-        if session.get('email'):
+        if not current_user.is_authenticated:
             return flask.render_template("settings.html")
         return flask.render_template("login.html")
+
+
+@app.route('/change_email', methods=["POST"])
+@flask_login.fresh_login_required
+def change_email():
+    email = request.form.get('email')
+    if not email:
+        return flask.make_response({"status": "No email"}, 400)
+    if email_check.search(email) is None:
+        return flask.make_response({"status": "Invalid email syntax"}, 400)
+        
+    return flask.render_template("change_email.html", email=email)
+
+
+@app.route('/api/change_email', methods=["GET"])
+@flask_login.fresh_login_required
+def change_email_api():
+    email = request.form.get('email')
+    if not email:
+        return flask.make_response({"status": "No email"}, 400)
+    if email_check.search(email) is None:
+        return flask.make_response({"status": "Invalid email syntax"}, 400)
+
+    if not current_user.is_authenticated:
+        return flask.make_response({"status": "Unauthorized"}, 401)
+
+    # Write old email data to new email and delete orignal entry
+    db[email] = db[current_user.email]
+    print(f"Changing {current_user.email} => {email}")
+    del db[current_user.email]
+
+    return flask.render_template("logout.html") # Logout user afterwards
+
+
+@app.route('/delete_account')
+@flask_login.fresh_login_required
+def delete_account():
+    del db[flask_login.current_user.email]
+    return flask.make_response("Account Deleted, bye!", 200)
 
 
 @app.route('/logout')
@@ -130,37 +169,6 @@ def settings():
     return flask.render_template("settings.html", 
         user=flask_login.current_user
     )
-
-@app.route('/change_email', methods=["POST"])
-@flask_login.fresh_login_required
-def change_email():
-    email = request.form.get('email')
-    if not email:
-        return flask.make_response({"status": "No email"}, 400)
-    if email_check.search(email) is None:
-        return flask.make_response({"status": "Invalid email syntax"}, 400)
-        
-    return flask.render_template("change_email.html", email=email)
-
-@app.route('/api/change_email', methods=["GET"])
-@flask_login.fresh_login_required
-def change_email_api():
-    email = request.form.get('email-field')
-    #if not email:
-    #    return flask.make_response({"status": "No email"}, 400)
-    #if email_check.search(email) is None:
-    #    return flask.make_response({"status": "Invalid email syntax"}, 400)
-
-    print(flask_login.current_user.email)
-
-    return flask.render_template("logout.html") # Logout user afterwards
-
-
-@app.route('/delete_account')
-@flask_login.fresh_login_required
-def delete_account():
-    del db[flask_login.current_user.email]
-    return flask.make_response("Account Deleted, bye!", 200)
 
 
 @app.route('/about')

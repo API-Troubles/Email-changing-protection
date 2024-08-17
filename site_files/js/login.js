@@ -18,12 +18,12 @@ function handleLogin(event) {
     }
 
     xhr.onload = function() {
-        if (xhr.status === 201) { // HTTP 201 = resource created, aka new user!
+        if (xhr.status === 200) { // HTTP 200 = login :yay:
             window.location.href = '/settings';
 
         } else if (xhr.status === 400) { // HTTP 400 = bad request
             const response = JSON.parse(xhr.responseText);
-            const error = document.createTextNode(`Bad Request. This shouldn't happen, submit a Github issue with this error! ${response.status}`);
+            const error = document.createTextNode(`Bad Request. This shouldn't happen, submit a Github issue with this error: ${response.status}`);
             errorBox.appendChild(error);
 
         } else if (xhr.status === 409) { // HTTP 409 = Email taken ):
