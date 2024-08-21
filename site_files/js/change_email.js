@@ -2,7 +2,8 @@ function handleChange(event) {
     event.preventDefault();
     const errorBox = document.getElementById("error-msg");
 
-    const email = null; // TODO CHANGE THIS
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get("email-field"); // TODO CHANGE THIS
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/change_email', true);
@@ -27,26 +28,35 @@ function handleChange(event) {
     xhr.send(JSON.stringify({ email: email }));
 }
 
-function warnScams() {
+function warnScams(btn) {
     let prompt = document.getElementById('warning-scams');
-    if (prompt.style.display === "block") {
-        prompt.style.display = "none";
-    } else if (prompt.style.display === "none") {
+    if (btn.checked) {
         prompt.style.display = "block";
+    } else {
+        prompt.style.display = "none";
     }
 }
 
-function warnRushing() {
+function warnRushing(btn) {
     let prompt = document.getElementById('warning-rush');
-    if (prompt.style.display === "block") {
-        prompt.style.display = "none";
-    } else if (prompt.style.display === "none") {
+    if (btn.checked) {
         prompt.style.display = "block";
+    } else {
+        prompt.style.display = "none";
     }
 }
 
-document.getElementById('warning-rush').addEventListener("type", warnRushing)
-document.getElementById('warning-rush').addEventListener("type", warnRushing)
+document.addEventListener("DOMContentLoaded", (event) => {
+    console.log("DOM has fully loaded");
 
-document.getElementById('warning-rush').addEventListener("type", warnRushing)
-document.getElementById('warning-rush').addEventListener("type", warnRushing)
+    const urgentElements = document.getElementsByName('urgent-matter');
+    const understandElements = document.getElementsByName('understand-scams');
+
+    urgentElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {warnRushing(urgentElements[0])});
+    });
+
+    understandElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {warnScams(understandElements[0])});
+    });
+});

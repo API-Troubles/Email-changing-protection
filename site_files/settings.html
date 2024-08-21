@@ -11,7 +11,7 @@
 
     <h2>Change email</h2>
     <p id="error-msg"></p>
-    <form onsubmit="handleSettingsEmail(event)">
+    <form action="{{ url_for('change_email') }}">
         <input type="text" id="email-field" name="email-field" placeholder="Email">
         <input type="submit" value="Change Email">
     </form>

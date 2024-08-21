@@ -119,10 +119,10 @@ def login():
             return flask.render_template("login.html")
 
 
-@app.route('/change_email', methods=["GET", "POST"])
+@app.route('/change_email', methods=["GET"])
 @flask_login.fresh_login_required
 def change_email():
-    email = request.get_json().get('email')
+    email = request.args.get('email-field')
     if not email:
         return flask.make_response({"status": "No email"}, 400)
     if email_check.search(email) is None:
