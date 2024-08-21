@@ -34,7 +34,7 @@ function handleSignup(event) {
             errorBox.appendChild(error);
 
         } else if (xhr.status === 409) { // HTTP 409 = Email taken ):
-            const error = document.createTextNode(`This email has already been registered. Forgot password? Click here to reset it.`); // TODO: Add reset url
+            const error = document.createTextNode(`This email has already been registered. ):`); // TODO: Add reset url
             errorBox.appendChild(error);
         }
     };

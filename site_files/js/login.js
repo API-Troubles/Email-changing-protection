@@ -26,8 +26,8 @@ function handleLogin(event) {
             const error = document.createTextNode(`Bad Request. This shouldn't happen, submit a Github issue with this error: ${response.status}`);
             errorBox.appendChild(error);
 
-        } else if (xhr.status === 409) { // HTTP 409 = Email taken ):
-            const error = document.createTextNode(`This email has already been registered. Forgot password? Click here to reset it.`); // TODO: Add reset url
+        } else if (xhr.status === 401) { // HTTP 401 = Unauthorized
+            const error = document.createTextNode(`Wrong password/username, pls try again.`);
             errorBox.appendChild(error);
         }
     };

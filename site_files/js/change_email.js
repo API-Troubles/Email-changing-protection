@@ -2,8 +2,7 @@ function handleChange(event) {
     event.preventDefault();
     const errorBox = document.getElementById("error-msg");
 
-    const email = document.getElementById('email-field').value;
-    const password = document.getElementById('password-field').value;
+    const email = null; // TODO CHANGE THIS
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/change_email', true);
@@ -21,9 +20,7 @@ function handleChange(event) {
 
         } else if (xhr.status === 400) { // HTTP 400 = bad request
             const response = JSON.parse(xhr.responseText);
-            const error = document.createTextNode(`Bad Request. This shouldn't happen, submit a Github issue with this error! ${response.status}`);
-            errorBox.appendChild(error);
-
+            alert(`Bad Request. This shouldn't happen, submit a Github issue with this error! ${response.status}`);
         }
     };
 
@@ -35,7 +32,7 @@ function warnScams() {
     if (prompt.style.display === "block") {
         prompt.style.display = "none";
     } else if (prompt.style.display === "none") {
-            prompt.style.display = "block";
+        prompt.style.display = "block";
     }
 }
 
@@ -44,7 +41,7 @@ function warnRushing() {
     if (prompt.style.display === "block") {
         prompt.style.display = "none";
     } else if (prompt.style.display === "none") {
-            prompt.style.display = "block";
+        prompt.style.display = "block";
     }
 }
 

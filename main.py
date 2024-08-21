@@ -80,9 +80,10 @@ def signup():
         flask_login.login_user(User(db[email]["email"], db[email]["password-hash"]))
         return flask.make_response({"status": "OK"}, 201) # Return OK
     else: # Render signup page on GET req
-        if not current_user.is_authenticated:
-            return flask.render_template("settings.html")
-        return flask.render_template("signup.html")
+        if current_user.is_authenticated:
+            return flask.redirect(flask.url_for("settings"))
+        else:
+            return flask.render_template("signup.html")
 
 
 @app.route('/login', methods = ['POST', 'GET']) # type: ignore
@@ -112,27 +113,28 @@ def login():
         flask_login.login_user(User(db[email]["email"], db[email]["password-hash"]), remember=remember)
         return flask.make_response({"status": "OK"}, 200)
     else: # Render login page on GET req
-        if not current_user.is_authenticated:
-            return flask.render_template("settings.html")
-        return flask.render_template("login.html")
+        if current_user.is_authenticated:
+            return flask.redirect(flask.url_for("settings"))
+        else:
+            return flask.render_template("login.html")
 
 
-@app.route('/change_email', methods=["POST"])
+@app.route('/change_email', methods=["GET", "POST"])
 @flask_login.fresh_login_required
 def change_email():
-    email = request.form.get('email')
+    email = request.get_json().get('email')
     if not email:
         return flask.make_response({"status": "No email"}, 400)
     if email_check.search(email) is None:
         return flask.make_response({"status": "Invalid email syntax"}, 400)
-        
+
     return flask.render_template("change_email.html", email=email)
 
 
-@app.route('/api/change_email', methods=["GET"])
+@app.route('/api/change_email', methods=["POST"])
 @flask_login.fresh_login_required
 def change_email_api():
-    email = request.form.get('email')
+    email = request.get_json().get('email')
     if not email:
         return flask.make_response({"status": "No email"}, 400)
     if email_check.search(email) is None:

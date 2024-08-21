@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <h1>{% block title %}Settings{% endblock %}</h1>
 
-    <p>Logged in as {{ user.email }}.</p>
+    <p>Logged in as {{ user.email }}. <a href="{{ url_for('logout') }}">Sign out</a></p>
 
     <h2>Change email</h2>
-    <form action="{{ url_for('change_email') }}" method="POST">
+    <p id="error-msg"></p>
+    <form onsubmit="handleSettingsEmail(event)">
         <input type="text" id="email-field" name="email-field" placeholder="Email">
         <input type="submit" value="Change Email">
     </form>
