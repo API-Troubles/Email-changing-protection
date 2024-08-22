@@ -1,3 +1,6 @@
+let submitBtn = null;
+let warningInfo = {};
+
 function handleChange(event) {
     event.preventDefault();
     const errorBox = document.getElementById("error-msg");
@@ -30,24 +33,46 @@ function handleChange(event) {
 
 function warnScams(btn) {
     let prompt = document.getElementById('warning-scams');
-    if (btn.checked) {
-        prompt.style.display = "block";
-    } else {
+    if (btn.checked) { // This one is flipped from the rest, in this case yes = understand = gud
         prompt.style.display = "none";
+        if (warningInfo.scam_info) {
+            warningInfo.Remove("scam_info");
+        }
+    } else {
+        prompt.style.display = "block";
+        if (!warningInfo.scam_info) {
+            warningInfo.scam_info = ""
+        }
     }
+    changeBtnState();
 }
 
 function warnRushing(btn) {
     let prompt = document.getElementById('warning-rush');
-    if (btn.checked) {
+    if (btn.checked) { // Yes = rushing = bad
         prompt.style.display = "block";
+        warningScore++;
     } else {
         prompt.style.display = "none";
+        warningScore--;
     }
+    changeBtnState();
+}
+
+function changeBtnState() {
+    for (let w in warningInfo) {
+        if (w === true) {
+            submitBtn.disabled = false;
+            return
+        }
+    }
+    submitBtn.disabled = true;
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
     console.log("DOM has fully loaded");
+
+    submitBtn = document.getElementById("submit-btn");
 
     const urgentElements = document.getElementsByName('urgent-matter');
     const understandElements = document.getElementsByName('understand-scams');
