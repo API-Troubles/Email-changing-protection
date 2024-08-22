@@ -1,22 +1,16 @@
 let submitBtn = null;
-let warningInfo = {rushing: false, scam_info: false};
+let warningInfo = {rushing: null, scam_info: null, why_change: null, decision: null, remote_access: null, ownership: null};
 
 function handleChange(event) {
     event.preventDefault();
     const errorBox = document.getElementById("error-msg");
 
-    const urlParams = new URLSearchParams(window.location.search);
+    let urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get("email-field");
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/change_email', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-
-    if (!emailRe.test(email)) {
-        const error = document.createTextNode(`That is not a valid email.`);
-        errorBox.appendChild(error);
-        return
-    }
 
     xhr.onload = function() {
         if (xhr.status === 200) { // HTTP 200 = all good, logout of account
@@ -30,19 +24,55 @@ function handleChange(event) {
 
     xhr.send(JSON.stringify({ email: email }));
 }
+/*
+function warnOwnership(btn) {
+    if (btn.selected) {
+        prompt.style.display = "none";
+        warningInfo.ownership = false;
+    } else {
+        prompt.style.display = "block";
+        warningInfo.ownership = true
+    }
+    changeBtnState();
+}
+
+function warnRemoteAccess(btn) {
+    if (btn.selected) {
+        prompt.style.display = "none";
+        warningInfo.remote_access = false;
+    } else {
+        prompt.style.display = "block";
+        warningInfo.remote_access = true
+    }
+    changeBtnState();
+}
+*/
 
 function warnWhyChange(btn) {
     let selectedValue = document.querySelector('input[name=why-change-email]:checked')
     let prompt = document.getElementById('warning-why');
     if (['own-choice', 'trusted-family'].includes(selectedValue.value)) {
         prompt.style.display = "none";
-        warningInfo.scam_info = false;
+        warningInfo.why_change = false;
     } else {
         prompt.style.display = "block";
-        warningInfo.scam_info = true
+        warningInfo.why_change = true
     }
     changeBtnState();
 }
+
+/* 
+function warnDecision(btn) {
+    if (btn.selected) {
+        prompt.style.display = "none";
+        warningInfo.decision = false;
+    } else {
+        prompt.style.display = "block";
+        warningInfo.decision = true
+    }
+    changeBtnState();
+}
+*/
 
 function warnScams(btn) {
     let prompt = document.getElementById('warning-scams');
@@ -71,7 +101,7 @@ function warnRushing(btn) {
 function changeBtnState() {
     for (let w in warningInfo) {
         console.log(w)
-        if (warningInfo[w] === true) {
+        if (warningInfo[w] === true or warningInfo[w] === null) {
             submitBtn.disabled = true;
             return
         }
@@ -96,7 +126,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         radioBtn.addEventListener('change', () => {warnScams(understandElements[0])});
     });
 
-        reasonElements.forEach(radioBtn => {
+    reasonElements.forEach(radioBtn => {
         radioBtn.addEventListener('change', () => {warnWhyChange(reasonElements)});
     });
 });

@@ -120,7 +120,7 @@ def login():
 
 
 @app.route('/change_email', methods=["GET"])
-@flask_login.fresh_login_required
+@flask_login.login_required
 def change_email():
     email = request.args.get('email-field')
     if not email:
@@ -132,7 +132,7 @@ def change_email():
 
 
 @app.route('/api/change_email', methods=["POST"])
-@flask_login.fresh_login_required
+@flask_login.login_required
 def change_email_api():
     email = request.get_json().get('email')
     if not email:
@@ -145,17 +145,25 @@ def change_email_api():
 
     # Write old email data to new email and delete orignal entry
     db[email] = db[current_user.email]
-    print(f"Changing {current_user.email} => {email}")
-    del db[current_user.email]
 
-    return flask.render_template("logout.html") # Logout user afterwards
+    user = current_user
+    user.email = email
+
+    db[email] = db[current_user.email]
+    del db[current_user.email]
+    
+    print(f"Changing {current_user.email} => {email}")
+
+    flask_login.login_user(user)
+
+    return flask.make_response({"status": "OK"}, 200)
 
 
 @app.route('/delete_account')
 @flask_login.fresh_login_required
 def delete_account():
     del db[flask_login.current_user.email]
-    return flask.make_response("Account Deleted, bye!", 200)
+    return flask.make_response("Account Deleted, bye!", 204)
 
 
 @app.route('/logout')
@@ -166,7 +174,7 @@ def logout():
 
 
 @app.route('/settings')
-@flask_login.fresh_login_required
+@flask_login.login_required
 def settings():
     return flask.render_template("settings.html", 
         user=flask_login.current_user
