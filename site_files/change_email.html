@@ -27,6 +27,14 @@
         </div>
 
         <div>
+            <p>Does someone not family have access to your computer? Did they tell you to install software like LogMeIn, TeamViewer or GoToAssist?</p>
+            <input type="radio" id="remote-access-yes" name="remote-access" value="yes">
+            <label for="remote-access-yes">Yes</label>
+            <input type="radio" id="remote-access-no" name="remote-access" value="no">
+            <label for="remote-access-no">No</label><br>
+        </div>
+
+        <div>
             <p>Is this your decision to change this email, and NOT anyone else? This includes trusted family and friends.</p>
             <input type="radio" id="decision-own-yes" name="decision-own" value="yes">
             <label for="decision-own-yes">Yes</label>
@@ -38,16 +46,16 @@
             <p>Why are you changing your email address?</p>
             <input type="radio" id="official-email" name="why-change-email" value="official-email">
             <label for="official-email">Official email</label><br>
-            
+
             <input type="radio" id="trusted-family" name="why-change-email" value="trusted-family">
             <label for="trusted-family">I was told by a trusted family member / friend</label><br>
-            
+
             <input type="radio" id="random-person" name="why-change-email" value="random-person">
             <label for="random-person">I was told by someone NOT trusted family / friend</label><br>
-            
+
             <input type="radio" id="tech-support" name="why-change-email" value="tech-support">
             <label for="tech-support">Tech support told me to</label><br>
-            
+
             <input type="radio" id="we-told" name="why-change-email" value="we-told">
             <label for="we-told">I was told to by you</label><br>
 
@@ -72,8 +80,9 @@
         </div>
 
         <div id="warning-msg"> <!-- Hide messages with display: none; below-->
-            <p id="warning-scams" style="display: none;">Before you continue, you should be aware of what scams are and how they work, learn about them <a href="https://www.cyber.gc.ca/en/guidance/dont-take-bait-recognize-and-avoid-phishing-attacks#defn-phishing">here!</a> Once your down reading, go click <i>Yes, I know what scams are</i></p>
-            <p id="warning-rush" style="display: none;">Take your time! Beware, scammers will rush you so think things through!</p>
+            <p id="warning-why" style="display: none;">It seems like someone is telling you to change your email. We won't ever tell you to do that, nor should anyone else other than trusted family. This might be a scam! Contact support for more info.</p>
+            <p id="warning-scams" style="display: none;">Before you continue, you should be aware of what scams are and how they work, learn about them <a href="https://www.cyber.gc.ca/en/guidance/dont-take-bait-recognize-and-avoid-phishing-attacks#defn-phishing">here!</a> Once your done reading, go click <i>Yes, I know what scams are.</i></p>
+            <p id="warning-rush" style="display: none;">Take your time! Beware, scammers will rush you so think things through! As a reminder, this action may give someone else your account if its not your email. Contact support for more info.</p>
         </div>
         <input type="submit" id="submit-btn">
     </form>
