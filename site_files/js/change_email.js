@@ -24,7 +24,7 @@ function handleChange(event) {
 
     xhr.send(JSON.stringify({ email: email }));
 }
-/*
+
 function warnOwnership(btn) {
     if (btn.selected) {
         prompt.style.display = "none";
@@ -46,7 +46,6 @@ function warnRemoteAccess(btn) {
     }
     changeBtnState();
 }
-*/
 
 function warnWhyChange(btn) {
     let selectedValue = document.querySelector('input[name=why-change-email]:checked')
@@ -114,19 +113,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     submitBtn = document.getElementById("submit-btn");
 
+    const ownershipElements = document.getElementsByName('own-email');
+    const remoteAccessElements = documents.getElementsByName('')
     const urgentElements = document.getElementsByName('urgent-matter');
     const understandElements = document.getElementsByName('understand-scams');
     const reasonElements = document.getElementsByName('why-change-email');
 
-    urgentElements.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnRushing(urgentElements[0])});
+    ownershipElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {warnRushing(ownershipElements[0])});
+    });
+
+    warnRemoteAccess.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {warnRushing(warnRemoteAccess[0])});
+    });
+
+    reasonElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {warnWhyChange(reasonElements)});
     });
 
     understandElements.forEach(radioBtn => {
         radioBtn.addEventListener('change', () => {warnScams(understandElements[0])});
     });
 
-    reasonElements.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnWhyChange(reasonElements)});
+    urgentElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {warnRushing(urgentElements[0])});
     });
 });

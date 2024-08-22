@@ -144,7 +144,9 @@ def change_email_api():
         return flask.make_response({"status": "Unauthorized"}, 401)
 
     # Write old email data to new email and delete orignal entry
-    db[email] = db[current_user.email]
+    user_data = db[current_user.email]
+    user_data["email"] = email
+    db[email] = user_data
 
     user = current_user
     user.email = email
