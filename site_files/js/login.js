@@ -12,8 +12,7 @@ function handleLogin(event) {
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     if (!emailRe.test(email)) {
-        const error = document.createTextNode(`That is not a valid email.`);
-        errorBox.appendChild(error);
+        errorBox.textContent = `That is not a valid email.`;
         return
     }
 
@@ -23,12 +22,10 @@ function handleLogin(event) {
 
         } else if (xhr.status === 400) { // HTTP 400 = bad request
             const response = JSON.parse(xhr.responseText);
-            const error = document.createTextNode(`Bad Request. This shouldn't happen, submit a Github issue with this error: ${response.status}`);
-            errorBox.appendChild(error);
+            errorBox.textContent = `Bad Request. This shouldn't happen, submit a Github issue with this error: ${response.status}`;
 
         } else if (xhr.status === 401) { // HTTP 401 = Unauthorized
-            const error = document.createTextNode(`Wrong password/username, pls try again.`);
-            errorBox.appendChild(error);
+            errorBox.textContent = `Wrong password/username, pls try again.`;
         }
     };
 

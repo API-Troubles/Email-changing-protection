@@ -5,8 +5,7 @@ function handleSettingsEmail(event) {
     const email = document.getElementById('email-field').value;
 
     if (!emailRe.test(email)) {
-        const error = document.createTextNode(`That is not a valid email.`);
-        errorBox.appendChild(error);
+        errorBox.textContent = `That is not a valid email.`;
         return
     }
 

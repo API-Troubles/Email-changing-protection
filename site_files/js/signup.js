@@ -13,14 +13,13 @@ function handleSignup(event) {
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     if (password !== rePassword) {
-        const error = document.createTextNode(`The password fields do not match.`);
+        errorBox.textContent = `The password fields do not match.`;
         errorBox.appendChild(error);
         return
     }
 
     if (!emailRe.test(email)) {
-        const error = document.createTextNode(`That is not a valid email.`);
-        errorBox.appendChild(error);
+        errorBox.textContent = `That is not a valid email.`;
         return
     }
 
@@ -30,12 +29,10 @@ function handleSignup(event) {
 
         } else if (xhr.status === 400) { // HTTP 400 = bad request
             const response = JSON.parse(xhr.responseText);
-            const error = document.createTextNode(`Bad Request. This shouldn't happen, submit a Github issue with this error: ${response.status}`);
-            errorBox.appendChild(error);
+            errorBox.textContent = `Bad Request. This shouldn't happen, submit a Github issue with this error: ${response.status}`;
 
         } else if (xhr.status === 409) { // HTTP 409 = Email taken ):
-            const error = document.createTextNode(`This email has already been registered. ):`); // TODO: Add reset url
-            errorBox.appendChild(error);
+            errorBox.textContent = `This email has already been registered. ): Use another one.`;
         }
     };
 
