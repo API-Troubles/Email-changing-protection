@@ -7,6 +7,7 @@ function handleChange(event) {
 
     let urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get("email-field");
+    console.log(email);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/change_email', true);
@@ -82,12 +83,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     decisionElements.forEach(radioBtn => {
         radioBtn.addEventListener('change', () => {
-            let prompt = document.getElementById('warning-why');
+            let prompt = document.getElementById('warning-decision');
             if (decisionElements[0].checked) {
-                //prompt.style.display = "none";
+                prompt.style.display = "none";
                 warningInfo.decision = false;
             } else {
-                //prompt.style.display = "block";
+                prompt.style.display = "block";
                 warningInfo.decision = true;
             }
             changeBtnState();

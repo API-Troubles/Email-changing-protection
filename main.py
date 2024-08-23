@@ -144,19 +144,17 @@ def change_email_api():
         return flask.make_response({"status": "Unauthorized"}, 401)
 
     # Write old email data to new email and delete orignal entry
-    user_data = db[current_user.email]
-    user_data["email"] = email
-    db[email] = user_data
+    user_data = db[current_user.email] # Get old data
+    user_data["email"] = email         # Write new email
+    db[email] = user_data              # Assign new db entru to new data
 
-    user = current_user
-    user.email = email
-
-    db[email] = db[current_user.email]
     del db[current_user.email]
-    
-    print(f"Changing {current_user.email} => {email}")
 
-    flask_login.login_user(user)
+    print(f"Changing {current_user.email} => {email}")
+    print(db.get(current_user.email))
+    print(db.get(email))
+
+    flask_login.login_user(User(email, db[email]["password-hash"]))
 
     return flask.make_response({"status": "OK"}, 200)
 

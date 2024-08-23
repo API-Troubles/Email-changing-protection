@@ -37,10 +37,8 @@ function handleLogin(event) {
 
 function showPassword() {
     if (document.getElementById('show-pw').checked) {
-        document.getElementById('re-password-field').type="text";
         document.getElementById('password-field').type="text";
     } else {
-        document.getElementById('re-password-field').type="password";
         document.getElementById('password-field').type="password";
     }
 }
