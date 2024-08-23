@@ -154,6 +154,7 @@ def change_email_api():
     print(db.get(current_user.email))
     print(db.get(email))
 
+    flask_login.logout_user() # Logout and relogin user
     flask_login.login_user(User(email, db[email]["password-hash"]))
 
     return flask.make_response({"status": "OK"}, 200)

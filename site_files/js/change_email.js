@@ -14,8 +14,8 @@ function handleChange(event) {
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onload = function() {
-        if (xhr.status === 200) { // HTTP 200 = all good, logout of account
-            window.location.href = '/logout';
+        if (xhr.status === 200) { // HTTP 200 = all good, go back to settings
+            window.location.href = '/settings';
 
         } else if (xhr.status === 400) { // HTTP 400 = bad request
             const response = JSON.parse(xhr.responseText);
