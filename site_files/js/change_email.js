@@ -25,86 +25,18 @@ function handleChange(event) {
     xhr.send(JSON.stringify({ email: email }));
 }
 
-function warnOwnership(btn) {
-    if (btn.selected) {
-        prompt.style.display = "none";
-        warningInfo.ownership = false;
-    } else {
-        prompt.style.display = "block";
-        warningInfo.ownership = true
-    }
-    changeBtnState();
-}
-
-function warnRemoteAccess(btn) {
-    if (btn.selected) {
-        prompt.style.display = "none";
-        warningInfo.remote_access = false;
-    } else {
-        prompt.style.display = "block";
-        warningInfo.remote_access = true
-    }
-    changeBtnState();
-}
-
-function warnWhyChange(btn) {
-    let selectedValue = document.querySelector('input[name=why-change-email]:checked')
-    let prompt = document.getElementById('warning-why');
-    if (['own-choice', 'trusted-family'].includes(selectedValue.value)) {
-        prompt.style.display = "none";
-        warningInfo.why_change = false;
-    } else {
-        prompt.style.display = "block";
-        warningInfo.why_change = true
-    }
-    changeBtnState();
-}
-
-/* 
-function warnDecision(btn) {
-    if (btn.selected) {
-        prompt.style.display = "none";
-        warningInfo.decision = false;
-    } else {
-        prompt.style.display = "block";
-        warningInfo.decision = true
-    }
-    changeBtnState();
-}
-*/
-
-function warnScams(btn) {
-    let prompt = document.getElementById('warning-scams');
-    if (btn.checked) { // This one is flipped from the rest, in this case yes = understand = gud
-        prompt.style.display = "none";
-        warningInfo.scam_info = false;
-    } else {
-        prompt.style.display = "block";
-        warningInfo.scam_info = true
-    }
-    changeBtnState();
-}
-
-function warnRushing(btn) {
-    let prompt = document.getElementById('warning-rush');
-    if (btn.checked) { // Yes = rushing = bad
-        prompt.style.display = "block";
-        warningInfo.rushing = true;
-    } else {
-        prompt.style.display = "none";
-        warningInfo.rushing = false;
-    }
-    changeBtnState();
-}
-
 function changeBtnState() {
     for (let w in warningInfo) {
-        console.log(w)
-        if (warningInfo[w] === true or warningInfo[w] === null) {
+        if (warningInfo[w] === true || warningInfo[w] === null) {
+            console.log(`Flagged at ${w}`)
             submitBtn.disabled = true;
+            if (warningInfo[w] === true) {
+                document.getElementById('warning-support').style.display = "block";
+            }
             return
         }
     }
+    document.getElementById('warning-support').style.display = "none";
     submitBtn.disabled = false;
 }
 
@@ -114,28 +46,94 @@ document.addEventListener("DOMContentLoaded", (event) => {
     submitBtn = document.getElementById("submit-btn");
 
     const ownershipElements = document.getElementsByName('own-email');
-    const remoteAccessElements = documents.getElementsByName('')
-    const urgentElements = document.getElementsByName('urgent-matter');
-    const understandElements = document.getElementsByName('understand-scams');
+    const remoteAccessElements = document.getElementsByName('remote-access');
+    const decisionElements = document.getElementsByName('decision-own');
     const reasonElements = document.getElementsByName('why-change-email');
+    const understandElements = document.getElementsByName('understand-scams');
+    const urgentElements = document.getElementsByName('urgent-matter');
 
     ownershipElements.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnRushing(ownershipElements[0])});
+        radioBtn.addEventListener('change', () => {
+            let prompt = document.getElementById('warning-ownership');
+            if (ownershipElements[0].checked) {
+                prompt.style.display = "none";
+                warningInfo.ownership = false;
+            } else {
+                prompt.style.display = "block";
+                warningInfo.ownership = true; // Bit counterintuitive, stands for flagging this as a warning, so true doesn't mean ownership
+            }
+            changeBtnState();
+        });
     });
 
-    warnRemoteAccess.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnRushing(warnRemoteAccess[0])});
+    remoteAccessElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {
+            let prompt = document.getElementById('warning-access');
+            if (remoteAccessElements[0].checked) {
+                prompt.style.display = "block";
+                warningInfo.remote_access = true;
+            } else {
+                prompt.style.display = "none";
+                warningInfo.remote_access = false;
+            }
+            changeBtnState();
+        });
+    });
+
+    decisionElements.forEach(radioBtn => {
+        radioBtn.addEventListener('change', () => {
+            let prompt = document.getElementById('warning-why');
+            if (decisionElements[0].checked) {
+                //prompt.style.display = "none";
+                warningInfo.decision = false;
+            } else {
+                //prompt.style.display = "block";
+                warningInfo.decision = true;
+            }
+            changeBtnState();
+        });
     });
 
     reasonElements.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnWhyChange(reasonElements)});
+        radioBtn.addEventListener('change', () => {
+            let selectedValue = document.querySelector('input[name=why-change-email]:checked')
+            let prompt = document.getElementById('warning-why');
+            if (['own-choice', 'trusted-family'].includes(selectedValue.value)) {
+                prompt.style.display = "none";
+                warningInfo.why_change = false;
+            } else {
+                prompt.style.display = "block";
+                warningInfo.why_change = true;
+            }
+            changeBtnState();
+        });
     });
 
     understandElements.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnScams(understandElements[0])});
+        radioBtn.addEventListener('change', () => {
+            let prompt = document.getElementById('warning-scams');
+            if (understandElements[0].checked) { // yes = understand = gud
+                prompt.style.display = "none";
+                warningInfo.scam_info = false;
+            } else {
+                prompt.style.display = "block";
+                warningInfo.scam_info = true;
+            }
+            changeBtnState();
+        });
     });
 
     urgentElements.forEach(radioBtn => {
-        radioBtn.addEventListener('change', () => {warnRushing(urgentElements[0])});
+        radioBtn.addEventListener('change', () => {
+            let prompt = document.getElementById('warning-rush');
+            if (urgentElements[0].checked) { // Yes = rushing = bad
+                prompt.style.display = "block";
+                warningInfo.rushing = true;
+            } else {
+                prompt.style.display = "none";
+                warningInfo.rushing = false;
+            }
+            changeBtnState();
+        });
     });
 });
