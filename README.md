@@ -4,6 +4,10 @@ A few weeks ago, a friend of mine had their account hacked on Discord. The attac
 
 The goal of this project is to show what companies can do (If only they cared) to improve their services and to prevent the daily scams that cause people to lose millions. If somehow your a company reading this, please, you can prevent scams with things as simple as this (maybe implemented better than me).
 
+## Demo
+
+View a demo here: https://replit.com/@CoolDude9000/Email-changing-protection#site_files/change_email.html
+
 ## How to implement
 
 Most of this project revolves around the demo to test this. However, the most important issues are the questions and verification systems. Implement it how you wish.
