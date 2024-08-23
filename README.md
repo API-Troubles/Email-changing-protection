@@ -1,12 +1,16 @@
-# Email Changing Protection
+# Email Phishing/Scam Protection Concept
+
+A few weeks ago, a friend of mine had their account hacked on Discord. The attacker socially engineered them to change their recovery email. They recovered their account since, but I wondered, how could companies prevent this? For such large companies, the best they can do is a bit of "don't share your 2fa code" in the bottom corner of an email. Some don't even include stuff like this anymore.
+
+The goal of this project is to show what companies can do (If only they cared) to improve their services and to prevent the daily scams that cause people to lose millions. If somehow your a company reading this, please, you can prevent scams with things as simple as this (maybe implemented better than me).
 
 ## How to implement
 
-Most of this project revoloves around the demo to test this. But what is most important is the questions and verification systems. Implement it how you wish.
+Most of this project revolves around the demo to test this. However, the most important issues are the questions and verification systems. Implement it how you wish.
 
 The following yes/no questions are used. [x] indicates what should be a yes response and [ ] indicates what should be a no response. If any question is answered incorrectly then the email should not be changed and the user warned.
 
-Ensure the user can't be socially engineered into providing responses by adding safeguards.
+Ensure the user can't be socially engineered to respond by adding safeguard messages.
 
 A good example would be to add pre-text for the user to read.
 ```
@@ -16,24 +20,19 @@ Please Read: Answer these questions by yourself. Don't let anyone else tell you 
 ### Confirmation of email ownership and choice:
 - [x] Do you/a family member own [email]?
 - [x] Is this your decision to change this email, and NOT anyone else not family?
-
-### Identification of common scams
-- [ ] Did tech support tell you to change your email?
-- [ ] Did we tell you to change your email?
-- [ ] Did someone tell you that this an urgent matter?
-- [ ] Is someone telling you to change your email that is NOT family?
-- [ ] Did someone not family tell you to change your email by phone, text or email?
+- [ ] Does someone not family have access to your computer? Did they tell you to install software like LogMeIn, TeamViewer or GoToAssist?
 
 ### Final Checks
 Why are you changing your email address?
 
-a) Official Email
-b) Unsolicited message or call
-c) A trusted friend or family member
-d) You decided on your own
-
-
-(The next question is to appear if the user selected a or b from above)
+ Official email
+ I was told by a trusted family member / friend
+ I was told by someone NOT trusted family / friend
+ Tech support told me to
+ I was told to by you
+ I decided to myself
 
 - [x] Are you aware of how scams work?
 If the user responds no, they should be redirected to a guide on how scams work.
+
+- [ ] Did someone say this is an urgent matter?
