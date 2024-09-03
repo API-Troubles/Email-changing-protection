@@ -1,4 +1,6 @@
 # Email Phishing/Scam Protection Concept
+![image](https://github.com/user-attachments/assets/1611099f-2ef0-4645-8781-71627be94ae1)
+
 
 A few weeks ago, a friend of mine had their account hacked on Discord. The attacker socially engineered them to change their recovery email. They recovered their account since, but I wondered, how could companies prevent this? For such large companies, the best they can do is a bit of "don't share your 2fa code" in the bottom corner of an email. Some don't even include stuff like this anymore.
 
